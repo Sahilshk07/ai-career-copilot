@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Career Copilot — Your AI-Powered Career Intelligence Platform</title>
+    <meta name="description" content="Upload your resume, get ATS scores, find job matches, identify skill gaps, practice interviews, and build a career roadmap — all powered by AI.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="main-nav">
+        <a href="#" class="logo" onclick="navigateTo('landing')">
+            <div class="logo-icon"><i class="fa-solid fa-rocket"></i></div>
+            <span>Career<strong>Copilot</strong></span>
+        </a>
+        <div class="nav-links" id="nav-links">
+            <a href="#" class="nav-link active" data-page="landing" onclick="navigateTo('landing')">Home</a>
+            <a href="#" class="nav-link" data-page="dashboard" onclick="navigateTo('dashboard')">Dashboard</a>
+            <a href="#" class="nav-link" data-page="jobs" onclick="navigateTo('jobs')">Jobs</a>
+            <a href="#" class="nav-link" data-page="skillgap" onclick="navigateTo('skillgap')">Skill Gap</a>
+            <a href="#" class="nav-link" data-page="interview" onclick="navigateTo('interview')">Interview</a>
+            <a href="#" class="nav-link" data-page="roadmap" onclick="navigateTo('roadmap')">Roadmap</a>
+        </div>
+        <div class="nav-actions">
+            <label class="mode-toggle" title="Toggle Mock/Live Mode">
+                <input type="checkbox" id="mock-mode-toggle">
+                <span class="toggle-slider"></span>
+                <span class="toggle-label" id="mode-label">Mock</span>
+            </label>
+            <span id="user-email-display" class="user-badge hidden"></span>
+            <button id="auth-btn" class="btn btn-ghost btn-sm"><i class="fa-solid fa-user"></i> Sign In</button>
+            <button id="logout-btn" class="btn btn-ghost btn-sm hidden"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+            <button class="hamburger" id="hamburger-btn"><i class="fa-solid fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <button class="modal-close" id="close-auth"><i class="fa-solid fa-xmark"></i></button>
+            <h2 id="auth-title">Welcome Back</h2>
+            <p class="modal-subtitle" id="auth-subtitle">Sign in to save your progress</p>
+            <div class="form-stack">
+                <input type="email" id="auth-email" placeholder="Email address" class="input">
+                <input type="password" id="auth-password" placeholder="Password" class="input">
+                <button id="auth-submit-btn" class="btn btn-primary w-full">Sign In</button>
+            </div>
+            <p class="auth-toggle-text">
+                <span id="auth-toggle-msg">Don't have an account?</span>
+                <a href="#" id="auth-toggle-link">Create one</a>
+            </p>
+        </div>
+    </div>
+
+    <main>
+        <!-- PAGE: Landing -->
+        <section id="page-landing" class="page active-page">
+            <div class="landing-hero">
+                <div class="hero-badge"><i class="fa-solid fa-bolt"></i> AI-Powered Career Intelligence</div>
+                <h1 class="hero-title">Your Career.<br><span class="gradient-text">Supercharged by AI.</span></h1>
+                <p class="hero-subtitle">Upload your resume and get instant ATS analysis, personalized job matches, skill gap insights, mock interviews, and a 30-day career roadmap.</p>
+                <div class="hero-upload-area" id="hero-drop-zone">
+                    <div class="upload-visual">
+                        <div class="upload-icon-ring">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                        </div>
+                        <h3>Drop your resume here</h3>
+                        <p>or click to browse • PDF only</p>
+                        <input type="file" id="resume-upload" accept=".pdf" hidden>
+                        <button class="btn btn-primary btn-lg" onclick="document.getElementById('resume-upload').click()">
+                            <i class="fa-solid fa-arrow-up-from-bracket"></i> Upload Resume
+                        </button>
+                    </div>
+                </div>
+                <div id="upload-loading" class="loader-section hidden">
+                    <div class="pulse-loader"></div>
+                    <p>Analyzing your resume with AI...</p>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="how-it-works">
+                    <h2 class="section-title">How It Works</h2>
+                    <div class="steps-grid">
+                        <div class="step-card">
+                            <div class="step-number">01</div>
+                            <div class="step-icon"><i class="fa-solid fa-file-arrow-up"></i></div>
+                            <h3>Upload Resume</h3>
+                            <p>Upload your PDF resume and our AI extracts every detail instantly.</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">02</div>
+                            <div class="step-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+                            <h3>Get Analysis</h3>
+                            <p>Receive ATS score, skills breakdown, strengths, and improvement tips.</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">03</div>
+                            <div class="step-icon"><i class="fa-solid fa-bullseye"></i></div>
+                            <h3>Find Opportunities</h3>
+                            <p>Get matched with relevant jobs and identify skill gaps for your dream role.</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">04</div>
+                            <div class="step-icon"><i class="fa-solid fa-road"></i></div>
+                            <h3>Build Your Path</h3>
+                            <p>Practice interviews and follow a personalized 30-day career roadmap.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="features-section">
+                    <h2 class="section-title">Everything You Need to Land Your Dream Job</h2>
+                    <div class="features-grid">
+                        <div class="feature-card"><div class="feature-icon"><i class="fa-solid fa-chart-line"></i></div><h3>ATS Score Analysis</h3><p>Know exactly how your resume ranks against applicant tracking systems.</p></div>
+                        <div class="feature-card"><div class="feature-icon"><i class="fa-solid fa-briefcase"></i></div><h3>Smart Job Matching</h3><p>AI-curated job listings that match your exact skill profile.</p></div>
+                        <div class="feature-card"><div class="feature-icon"><i class="fa-solid fa-puzzle-piece"></i></div><h3>Skill Gap Analyzer</h3><p>Compare your skills against any target role and see what's missing.</p></div>
+                        <div class="feature-card"><div class="feature-icon"><i class="fa-solid fa-comments"></i></div><h3>Mock Interviews</h3><p>Practice with AI-generated questions and get instant feedback.</p></div>
+                        <div class="feature-card"><div class="feature-icon"><i class="fa-solid fa-map"></i></div><h3>Career Roadmap</h3><p>Get a structured 30-day plan to become job-ready.</p></div>
+                        <div class="feature-card"><div class="feature-icon"><i class="fa-solid fa-file-lines"></i></div><h3>Resume Builder</h3><p>Generate ATS-optimized resumes from your details in seconds.</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: Dashboard -->
+        <section id="page-dashboard" class="page">
+            <div class="container">
+                <!-- Target Role Input (shown before full analysis) -->
+                <div id="target-role-section">
+                    <div class="page-header">
+                        <h1>Resume Dashboard</h1>
+                        <p>Your AI-powered resume analysis is ready. Set a target role for deeper insights.</p>
+                    </div>
+                    <div class="target-role-card">
+                        <div class="input-row">
+                            <input type="text" id="target-role-input" class="input input-lg" placeholder="Enter your target role (e.g., Frontend Developer)">
+                            <button id="analyze-career-btn" class="btn btn-primary btn-lg"><i class="fa-solid fa-wand-magic-sparkles"></i> Analyze</button>
+                        </div>
+                    </div>
+                    <div id="career-loading" class="loader-section hidden">
+                        <div class="pulse-loader"></div>
+                        <p>Running deep career analysis...</p>
+                    </div>
+                </div>
+
+                <!-- Score Cards -->
+                <div class="score-cards" id="score-cards">
+                    <div class="score-card">
+                        <div class="score-ring" id="ats-ring">
+                            <svg viewBox="0 0 120 120"><circle class="ring-bg" cx="60" cy="60" r="52"/><circle class="ring-fill ring-blue" cx="60" cy="60" r="52" id="ats-circle"/></svg>
+                            <div class="score-value"><span id="ats-score-val">0</span><small>/100</small></div>
+                        </div>
+                        <h3>ATS Score</h3>
+                        <span class="chip" id="career-level-chip">—</span>
+                    </div>
+                    <div class="score-card">
+                        <div class="score-ring">
+                            <svg viewBox="0 0 120 120"><circle class="ring-bg" cx="60" cy="60" r="52"/><circle class="ring-fill ring-purple" cx="60" cy="60" r="52" id="match-circle"/></svg>
+                            <div class="score-value"><span id="match-percent-val">0</span><small>%</small></div>
+                        </div>
+                        <h3>Role Match</h3>
+                        <span class="chip chip-green" id="readiness-chip">—</span>
+                    </div>
+                </div>
+
+                <!-- Dashboard Tabs -->
+                <div class="tab-bar" id="dashboard-tabs">
+                    <button class="tab active" data-tab="tab-analysis"><i class="fa-solid fa-chart-bar"></i> Analysis</button>
+                    <button class="tab" data-tab="tab-skills"><i class="fa-solid fa-code"></i> Skills</button>
+                    <button class="tab" data-tab="tab-improvements"><i class="fa-solid fa-lightbulb"></i> Tips</button>
+                    <button class="tab" data-tab="tab-linkedin"><i class="fa-brands fa-linkedin"></i> LinkedIn</button>
+                </div>
+                <div class="tab-panels">
+                    <div id="tab-analysis" class="tab-panel active">
+                        <div class="grid-2">
+                            <div class="card"><h3><i class="fa-solid fa-shield-halved"></i> Strengths</h3><ul id="strengths-list" class="item-list green"></ul></div>
+                            <div class="card"><h3><i class="fa-solid fa-triangle-exclamation"></i> Weaknesses</h3><ul id="weaknesses-list" class="item-list red"></ul></div>
+                        </div>
+                    </div>
+                    <div id="tab-skills" class="tab-panel">
+                        <div class="card"><h3><i class="fa-solid fa-microchip"></i> Extracted Skills</h3><div id="skills-tags" class="tags"></div></div>
+                        <div class="card mt"><h3><i class="fa-solid fa-circle-exclamation"></i> Missing Skills</h3><div id="missing-skills-tags" class="tags tags-red"></div></div>
+                    </div>
+                    <div id="tab-improvements" class="tab-panel">
+                        <div class="card"><h3><i class="fa-solid fa-wand-magic-sparkles"></i> Resume Improvement Tips</h3><ul id="improvements-list" class="item-list blue"></ul></div>
+                    </div>
+                    <div id="tab-linkedin" class="tab-panel">
+                        <div class="card"><h3><i class="fa-brands fa-linkedin"></i> Optimized About Section</h3><p id="li-about" class="text-block"></p><button class="btn btn-ghost btn-sm mt" onclick="copyText('li-about')"><i class="fa-regular fa-copy"></i> Copy</button></div>
+                        <div class="card mt"><h3><i class="fa-solid fa-pen-fancy"></i> Post Ideas</h3><ul id="li-posts" class="item-list blue"></ul></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: Job Matches -->
+        <section id="page-jobs" class="page">
+            <div class="container">
+                <div class="page-header"><h1>Job Matches</h1><p>AI-curated opportunities based on your resume profile.</p></div>
+                <div class="filter-bar">
+                    <input type="text" id="job-filter-role" class="input" placeholder="Filter by role...">
+                    <input type="text" id="job-filter-location" class="input" placeholder="Filter by location...">
+                    <button class="btn btn-ghost btn-sm" onclick="filterJobs()"><i class="fa-solid fa-filter"></i> Filter</button>
+                </div>
+                <div id="jobs-container" class="jobs-grid"></div>
+                <div id="no-jobs-msg" class="empty-state hidden"><i class="fa-solid fa-briefcase"></i><h3>No Jobs Yet</h3><p>Upload your resume and run a career analysis to see matched jobs.</p></div>
+            </div>
+        </section>
+
+        <!-- PAGE: Skill Gap Analyzer -->
+        <section id="page-skillgap" class="page">
+            <div class="container">
+                <div class="page-header"><h1>Skill Gap Analyzer</h1><p>Compare your current skills against any target role.</p></div>
+                <div class="skillgap-input-card">
+                    <div class="input-row">
+                        <input type="text" id="sg-target-role" class="input input-lg" placeholder="Target role (e.g., Data Scientist)">
+                        <button id="sg-analyze-btn" class="btn btn-primary btn-lg"><i class="fa-solid fa-magnifying-glass"></i> Analyze Gap</button>
+                    </div>
+                </div>
+                <div id="sg-loading" class="loader-section hidden"><div class="pulse-loader"></div><p>Analyzing skill gaps...</p></div>
+                <div id="sg-results" class="hidden">
+                    <div class="score-cards">
+                        <div class="score-card wide">
+                            <div class="score-ring"><svg viewBox="0 0 120 120"><circle class="ring-bg" cx="60" cy="60" r="52"/><circle class="ring-fill ring-purple" cx="60" cy="60" r="52" id="sg-circle"/></svg><div class="score-value"><span id="sg-match-val">0</span><small>%</small></div></div>
+                            <h3 id="sg-role-title">Role Match</h3>
+                        </div>
+                    </div>
+                    <div class="grid-2">
+                        <div class="card"><h3><i class="fa-solid fa-check-double"></i> Skills You Have</h3><div id="sg-matched" class="tags"></div></div>
+                        <div class="card"><h3><i class="fa-solid fa-xmark"></i> Skills You Need</h3><div id="sg-missing" class="tags tags-red"></div></div>
+                    </div>
+                    <div class="card mt"><h3><i class="fa-solid fa-graduation-cap"></i> Learning Recommendations</h3><div id="sg-recommendations" class="reco-list"></div></div>
+                </div>
+                <div id="sg-empty" class="empty-state"><i class="fa-solid fa-puzzle-piece"></i><h3>Ready to Analyze</h3><p>Enter a target role above to see how your skills compare.</p></div>
+            </div>
+        </section>
+
+        <!-- PAGE: Mock Interview -->
+        <section id="page-interview" class="page">
+            <div class="container">
+                <div class="page-header"><h1>Mock Interview</h1><p>Practice with AI-generated questions and get instant feedback.</p></div>
+                <div class="interview-setup" id="interview-setup">
+                    <div class="card">
+                        <h3><i class="fa-solid fa-user-tie"></i> Select Your Target Role</h3>
+                        <div class="input-row">
+                            <select id="interview-role" class="input input-lg">
+                                <option value="Software Developer">Software Developer</option>
+                                <option value="Frontend Developer">Frontend Developer</option>
+                                <option value="Backend Developer">Backend Developer</option>
+                                <option value="Full Stack Developer">Full Stack Developer</option>
+                                <option value="Data Scientist">Data Scientist</option>
+                                <option value="DevOps Engineer">DevOps Engineer</option>
+                                <option value="Product Manager">Product Manager</option>
+                                <option value="UX Designer">UX Designer</option>
+                            </select>
+                            <button id="start-interview-btn" class="btn btn-primary btn-lg"><i class="fa-solid fa-play"></i> Start Interview</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="interview-loading" class="loader-section hidden"><div class="pulse-loader"></div><p>Generating interview questions...</p></div>
+                <div id="interview-session" class="hidden">
+                    <div class="interview-progress">
+                        <span id="q-counter">Question 1 of 8</span>
+                        <div class="progress-bar"><div class="progress-fill" id="interview-progress-fill"></div></div>
+                    </div>
+                    <div class="card interview-card">
+                        <div class="q-meta"><span class="chip" id="q-category">Technical</span><span class="chip" id="q-difficulty">Medium</span></div>
+                        <h2 id="q-text">Loading question...</h2>
+                        <textarea id="answer-input" class="input" rows="6" placeholder="Type your answer here..."></textarea>
+                        <div class="interview-actions">
+                            <button id="submit-answer-btn" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Submit Answer</button>
+                            <button id="skip-btn" class="btn btn-ghost">Skip <i class="fa-solid fa-forward"></i></button>
+                        </div>
+                    </div>
+                    <div id="answer-loading" class="loader-section hidden"><div class="pulse-loader"></div><p>Evaluating your answer...</p></div>
+                    <div id="feedback-card" class="card hidden">
+                        <h3><i class="fa-solid fa-clipboard-check"></i> Feedback</h3>
+                        <div class="feedback-score"><div class="score-ring small"><svg viewBox="0 0 120 120"><circle class="ring-bg" cx="60" cy="60" r="52"/><circle class="ring-fill ring-blue" cx="60" cy="60" r="52" id="fb-circle"/></svg><div class="score-value"><span id="fb-score">0</span><small>/10</small></div></div></div>
+                        <p id="fb-text" class="text-block"></p>
+                        <div class="grid-2 mt">
+                            <div><h4 class="text-green"><i class="fa-solid fa-check"></i> Strengths</h4><ul id="fb-strengths" class="item-list green"></ul></div>
+                            <div><h4 class="text-red"><i class="fa-solid fa-arrow-up"></i> Improve</h4><ul id="fb-improvements" class="item-list red"></ul></div>
+                        </div>
+                        <div class="mt"><h4><i class="fa-solid fa-star"></i> Model Answer</h4><p id="fb-sample" class="text-block muted"></p></div>
+                        <button id="next-q-btn" class="btn btn-primary mt"><i class="fa-solid fa-forward"></i> Next Question</button>
+                    </div>
+                </div>
+                <div id="interview-complete" class="hidden">
+                    <div class="card text-center"><div class="complete-icon"><i class="fa-solid fa-trophy"></i></div><h2>Interview Complete!</h2><p>You've finished all questions. Average Score: <strong id="avg-score">0</strong>/10</p><button class="btn btn-primary mt" onclick="resetInterview()"><i class="fa-solid fa-rotate"></i> Practice Again</button></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: Career Roadmap -->
+        <section id="page-roadmap" class="page">
+            <div class="container">
+                <div class="page-header"><h1>Career Roadmap</h1><p>Your personalized 30-day plan to become job-ready.</p></div>
+                <div id="roadmap-content">
+                    <div class="timeline" id="roadmap-timeline"></div>
+                    <div class="grid-2 mt">
+                        <div class="card"><h3><i class="fa-solid fa-hammer"></i> Projects to Build</h3><ul id="projects-list" class="item-list green"></ul></div>
+                        <div class="card"><h3><i class="fa-solid fa-graduation-cap"></i> Courses to Take</h3><ul id="courses-list" class="item-list blue"></ul></div>
+                    </div>
+                </div>
+                <div id="roadmap-empty" class="empty-state"><i class="fa-solid fa-map"></i><h3>No Roadmap Yet</h3><p>Upload your resume and run a career analysis to generate your personalized roadmap.</p></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-brand"><span class="logo-text">Career<strong>Copilot</strong></span><p>AI-powered career intelligence for the next generation.</p></div>
+                <div class="footer-links"><a href="#" onclick="navigateTo('landing')">Home</a><a href="#" onclick="navigateTo('dashboard')">Dashboard</a><a href="#" onclick="navigateTo('interview')">Interview</a><a href="#" onclick="navigateTo('skillgap')">Skill Gap</a></div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2026 AI Career Copilot. Built by <strong>Sahil Shaik</strong></p></div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

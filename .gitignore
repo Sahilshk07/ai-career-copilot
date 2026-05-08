@@ -1,0 +1,67 @@
+# ===========================
+# AI Career Copilot - .gitignore
+# ===========================
+
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+
+# ---------- Virtual Environments ----------
+venv/
+.venv/
+env/
+ENV/
+
+# ---------- Environment Variables ----------
+.env
+.env.local
+.env.production
+.env.*.local
+
+# ---------- Database ----------
+instance/
+*.db
+*.sqlite3
+
+# ---------- Uploads ----------
+uploads/*
+!uploads/.gitkeep
+
+# ---------- IDE / Editor ----------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# ---------- OS Files ----------
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# ---------- Docker ----------
+docker-compose.override.yml
+
+# ---------- Logs ----------
+*.log
+npm-debug.log*
+pip-log.txt
+
+# ---------- Misc ----------
+*.bak
+*.tmp
+*.temp
+.cache/
